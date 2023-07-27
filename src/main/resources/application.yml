@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+#  kafka:
+#    consumer:
+#      # bootstrap-servers: localhost:9092
+#      group-id: user-service
+#      auto-offset-reset: earliest
+#      key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-serializer: org.apache.kafka.common.serialization.StringDeserializer
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+application-description: User Service App
+application-version: 1.0
+resilience4j:
+  retry:
+    instances:
+      getUser:
+        maxRetryAttempts: 5
+        waitDuration: 2s
+        enableExponentialBackoff: true
+#  cloud:
+#    config:
+#      enabled: false
+#  config:
+#    import: optional:configserver:http://localhost:8887
+#  cloud:
+#    config:
+#      profile: dev
